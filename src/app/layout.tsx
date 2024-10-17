@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import 'material-symbols/outlined.css';
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs';
+import { Inter } from 'next/font/google';
+import { ThemeProvider } from '@/components/themeProvider';
+import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
+
+const inter = Inter({ subsets: ['latin'] });
+
 export const metadata: Metadata = {
   title: 'ChatBot',
   description: 'ChatBot',
@@ -20,21 +19,22 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang='en'>
-      <body className={`antialiased`}>
-        <header className=''>
-          <h1 className='text-4xl font-extrabold'>Chat Bot </h1>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </header>
-        <main className=''>{children}</main>
-        <footer className=''>&copy; {new Date().getFullYear()} Chat Bot</footer>
-      </body>
-    </html>
+      <html lang='en' className={inter.className} suppressHydrationWarning>
+        <body className={`antialiased`}>
+          <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+            {/* poner header y footer por aca */}
+            <main>
+              <SignedOut>
+                <p>
+                  Welcome to ChatBot, please sign in to get the full experience
+                </p>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>{children}</SignedIn>
+            </main>
+          </ThemeProvider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
