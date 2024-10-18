@@ -1,4 +1,7 @@
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
+
+
 
 const config: Config = {
   darkMode: ['class'],
@@ -59,8 +62,11 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      zIndex: {
+        navbar: '1000',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [animate],
 };
 export default config;

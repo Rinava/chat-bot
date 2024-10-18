@@ -24,7 +24,7 @@ model Message {
   id        String   @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
   body      String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [clerkId])
   userId    String
   ai        Boolean  @default(false)
 }
