@@ -5,7 +5,7 @@ An intelligent chatbot powered by AI to assist and interact with users.
 
 ## Features
 - User management with Clerk
-- Real chat with artificial intelligence using Google Generative Ai bot (Gemini)
+- Real chatbot with artificial intelligence powered by Google Generative Ai (Gemini)
 - Dark and light theme 
 - Admin Dashboard
 
@@ -17,6 +17,7 @@ An intelligent chatbot powered by AI to assist and interact with users.
 - Next-themes
 - MongoDB and Prisma
 - Shadcn
+- Jest and React Testing Library
 
 ## Installation
 - Add the local variables
