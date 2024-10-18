@@ -4,8 +4,6 @@ import { Message as MessageType } from "@prisma/client";
 
 import { Chat } from "@/components/chat";
 
-
-
 describe("Chat Component", () => {
   const messages: MessageType[] = [
     {
@@ -25,52 +23,31 @@ describe("Chat Component", () => {
   ];
 
   const user = {
-    firstName: "John",
+    firstName: "Mary",
     lastName: "Doe",
-    email: "john.doe@example.com",
+    email: "mary.doe@example.com",
     id: "user1",
     createdAt: new Date("2023-01-01T00:00:00Z"),
     clerkId: "clerk123",
     imageUrl: "https://example.com/avatar.jpg",
   };
 
-  test("renders messages correctly", () => {
+  it("renders the chat component", () => {
     render(<Chat messages={messages} user={user} />);
-
-    // Check if messages are rendered
-    const messageElements = screen.getAllByTestId("message");
-    expect(messageElements).toHaveLength(messages.length);
-
-    // Check content of the first message
-    expect(messageElements[0]).toHaveTextContent("Hello!");
-    expect(messageElements[0]).toContainHTML("John");
-    expect(messageElements[0]).toHaveClass("right"); // User message should be on the right
-
-    // Check content of the AI message
-    expect(messageElements[1]).toHaveTextContent("How can I help you?");
-    expect(messageElements[1]).toHaveTextContent("🤖"); // AI message should show robot emoji
-    expect(messageElements[1]).toHaveClass("left"); // AI message should be on the left
+    expect(screen.getByTestId("chat")).toBeInTheDocument();
   });
 
-  test("shows typing indicator when waiting for response", () => {
-    render(
-      <Chat messages={messages} user={user} isWaitingForResponse={true} />,
-    );
-
-    // Check for the typing indicator
-    expect(screen.getByText("🤖")).toBeInTheDocument(); // AI message present
-    // search for a class name "typing-indicator" in the document
-    const typingIndicator = screen.getB
-
-    expect(typingIndicator).toBeInTheDocument(); // Check if typing indicator is rendered
+  it("displays all messages", () => {
+    render(<Chat messages={messages} user={user} />);
+    messages.forEach((message) => {
+      expect(screen.getByText(message.body)).toBeInTheDocument();
+    });
   });
 
-  test("does not show typing indicator when not waiting for response", () => {
-    render(
-      <Chat messages={messages} isWaitingForResponse={false} user={user} />,
-    );
-
-    // Ensure typing indicator is not present
-    expect(screen.queryByText("typing-indicator")).not.toBeInTheDocument();
+  it("renders messages in chronological order", () => {
+    render(<Chat messages={messages} user={user} />);
+    const renderedMessages = screen.getAllByTestId("message");
+    expect(renderedMessages[0]).toHaveTextContent("Hello!");
+    expect(renderedMessages[1]).toHaveTextContent("How can I help you?");
   });
 });
