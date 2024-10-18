@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET(
-  _: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } },
 ) {
   if (auth().orgRole !== "org:admin") {
@@ -29,7 +29,7 @@ export async function GET(
     });
 
     if (!dbUser) {
-      return null;
+      return new NextResponse("User not found", { status: 404 });
     }
 
     const clerkUser = await clerkClient.users.getUser(id);
@@ -43,9 +43,10 @@ export async function GET(
       email: clerkUser.emailAddresses[0].emailAddress || "",
     };
 
-    return NextResponse.json(user);
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw new Error("Error occurred during user fetch");
+    return NextResponse.json(user, { status: 200 });
+  } catch {
+    return new NextResponse("Error occurred during user fetch", {
+      status: 400,
+    });
   }
 }

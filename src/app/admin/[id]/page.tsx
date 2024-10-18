@@ -29,7 +29,7 @@ const UserHistory = ({ params }: { params: { id: string } }) => {
       .catch(() => {
         notFound();
       });
-  }, []);
+  }, [params.id]);
 
   return isLoading ? (
     <div className="flex h-64 items-center justify-center">
