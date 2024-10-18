@@ -22,6 +22,7 @@ export const Message = ({
       "mb-4 flex",
       side === "left" ? "justify-start" : "justify-end",
     )}
+    data-testid="message"
   >
     <div
       className={cn(

@@ -18,7 +18,7 @@ export const Chat = ({
   user,
   className,
 }: PrivateChatProps) => (
-  <div className={cn("w-full max-w-4xl p-4", className)}>
+  <div className={cn("w-full max-w-4xl p-4", className)} data-testid="chat">
     {messages.map((message, index) => (
       <Message
         key={index}
